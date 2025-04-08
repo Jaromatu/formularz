@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="zmien3">
+        <a href="wladca.html"><button>Wróć</button></a>
+      </div>
+      <div id="logo">
+        <!-- wstaw imie i nazwisko w sekcji logo-->
+        <h1>{{ title }}</h1>
+      </div>
+
+      <div id="nav">
+        {% if best_games %}
+        <h2>Najciekawsze partie:</h2>
+        <ol>
+          {% for game in best_games %}
+          <li><a href="{{ game }}" target="_blank">{{ game }}</a></li>
+          {% endfor %}
+        </ol>
+        {% endif %}
+      </div>
+
+      <div id="content">
+        <!-- wygeneruj zdjęcie w sekcji content-->
+        <img src="" class="image" />
+
+        <div class="text">
+          <!-- wstaw anegdote do 500 znaków, na końcu link do wikipedi w klasie text -->
+          {{ description }} {% if links %}
+
+          <ul>
+            {% for link in links %}
+            <li><a href="{{ link }}" target="_blank">{{ link }}</a></li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>Brak linków do wyświetlenia.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

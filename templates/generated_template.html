@@ -19,12 +19,10 @@
       <div id="nav">
         {% if best_games %}
         <h2>Najciekawsze partie:</h2>
-        <ol>
-          {% for game in best_games %}
-          <li><a href="{{ game }}" target="_blank">{{ game }}</a></li>
-          {% endfor %}
-        </ol>
-        {% endif %}
+
+        {% for game in best_games %}
+        <a href="{{ game }}" target="_blank">{{ game }}</a>
+        {% endfor %} {% endif %}
       </div>
 
       <div id="content">
@@ -33,14 +31,9 @@
 
         <div class="text">
           <!-- wstaw anegdote do 500 znaków, na końcu link do wikipedi w klasie text -->
-          {{ description }} {% if links %}
-
-          <ul>
-            {% for link in links %}
-            <li><a href="{{ link }}" target="_blank">{{ link }}</a></li>
-            {% endfor %}
-          </ul>
-          {% else %}
+          {{ description }} {% if links %} {% for link in links %}
+          <a href="{{ link }}" target="_blank">{{ link }}</a>
+          {% endfor %} {% else %}
           <p>Brak linków do wyświetlenia.</p>
           {% endif %}
         </div>

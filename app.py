@@ -1,3 +1,9 @@
+import shutil
+from flask import send_file
+import datetime
+import os
+
+
 from flask import Flask, render_template, request, redirect, url_for
 import os
 from datetime import datetime
@@ -41,6 +47,17 @@ def preview_page(filename):
             content = f.read()
         return content
     return "Plik nie istnieje.", 404
+
+@app.route('/download-all')
+def download_all():
+    zip_filename = f"generated_pages_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.zip"
+    zip_path = os.path.join("generated_pages", zip_filename)
+    
+    # Tworzy ZIP z folderu generated_pages
+    shutil.make_archive(zip_path.replace(".zip", ""), 'zip', "generated_pages")
+
+    return send_file(zip_path, as_attachment=True)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))

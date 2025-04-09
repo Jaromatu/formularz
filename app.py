@@ -1,3 +1,6 @@
+import logging
+logging.basicConfig(level=logging.DEBUG) 
+
 import shutil
 from flask import send_file
 import datetime
@@ -50,12 +53,15 @@ def preview_page(filename):
 
 @app.route('/download-all')
 def download_all():
-    zip_filename = f"generated_pages_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.zip"
-    zip_path = os.path.join("generated_pages", zip_filename)
-    
-    # Tworzy ZIP z folderu generated_pages
-    shutil.make_archive(zip_path.replace(".zip", ""), 'zip', "generated_pages")
+    # Użyj /tmp jeśli jesteś na Render (zazwyczaj działa dobrze)
+    output_dir = "/tmp"
+    zip_name = f"generated_pages_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip"
+    zip_base_path = os.path.join(output_dir, zip_name.replace(".zip", ""))  # bez rozszerzenia
 
+    # Tworzy ZIP z folderu generated_pages
+    shutil.make_archive(zip_base_path, 'zip', GENERATED_DIR)
+
+    zip_path = zip_base_path + ".zip"
     return send_file(zip_path, as_attachment=True)
 
 
